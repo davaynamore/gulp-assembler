@@ -2,7 +2,9 @@
 
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
-browserSync = require('browser-sync').create();
+browserSync = require('browser-sync').create(),
+htmlv = require('gulp-html-validator'),
+htmlValidator = require('gulp-w3c-html-validator');
 
 const task = {
 	dev: {
@@ -23,7 +25,8 @@ const task = {
 	connect: 'connect',
 	clean: 'clean',
 	development: 'dev',
-	default: 'default'
+	default: 'default',
+	validator: 'valid'
 }
 
 const path = {
@@ -76,6 +79,29 @@ gulp.task(task.dev.html, () => {
 	.pipe(browserSync.stream());
 });
 
+gulp.task('validInFile', function () {
+  gulp.src(path.src.html)
+    .pipe(htmlv({format: 'html'}))
+    .pipe($.rename({
+	    basename: "validator"
+  	}))
+    .pipe(gulp.dest(path.app.html));
+});
+
+gulp.task('validInConsole', () => {
+	const ignoreDuplicateIds = (type, message) => console.dir(type, message);
+	return gulp.src(path.src.html)
+	.pipe(htmlValidator());
+});
+
+gulp.task(
+	task.validator,
+	gulp.parallel(
+		'validInFile',
+		'validInConsole'
+		));
+
+
 gulp.task(task.dev.js, () => {
 	return gulp.src(path.src.js)
 	.pipe(gulp.dest(path.app.js))
@@ -102,7 +128,7 @@ gulp.task(task.build.fonts, () => {
 
 gulp.task(task.watch, () => {
 	$.watch(path.watch.scss, gulp.series(task.dev.css)),
-	$.watch(path.watch.html, gulp.series(task.dev.html)),
+	$.watch(path.watch.html, gulp.parallel(task.dev.html, task.validator)),
 	$.watch(path.watch.js, gulp.series(task.dev.js)),
 	$.watch(path.watch.img, gulp.series(task.dev.img)),
 	$.watch(path.watch.fonts, gulp.series(task.build.fonts)),
@@ -131,12 +157,13 @@ gulp.task(
 	gulp.parallel(
 		task.watch,
 		task.dev.html,
+		task.validator,
 		task.dev.css,
 		task.dev.js,
 		task.dev.img,
 		task.build.libs,
 		task.build.fonts,
 		task.connect
-	));
+		));
 
 gulp.task(task.default, gulp.series(task.clean, gulp.parallel(task.development)));
