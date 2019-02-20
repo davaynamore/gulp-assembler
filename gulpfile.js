@@ -59,7 +59,7 @@ const path = {
 
 gulp.task(task.dev.css, () => {
 	return setTimeout(() => {
-		return gulp.src(path.src.scss, { sourcemaps: true })
+		return gulp.src(path.src.scss, { sourcemaps: true, allowEmpty: true })
 		.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 		.pipe($.autoprefixer({
 			browsers: ['last 2 versions'],
@@ -72,13 +72,13 @@ gulp.task(task.dev.css, () => {
 });
 
 gulp.task(task.dev.html, () => {
-	return gulp.src(path.src.html)
+	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe(gulp.dest(path.app.html))
 	.pipe(browserSync.stream());
 });
 
-gulp.task('validInFile', function () {
-  gulp.src(path.src.html)
+gulp.task('validInFile', () => {
+  return gulp.src(path.src.html, { allowEmpty: true })
     .pipe(htmlv({format: 'html'}))
     .pipe($.rename({
 	    basename: "w3c"
@@ -87,7 +87,7 @@ gulp.task('validInFile', function () {
 });
 
 gulp.task('validInConsole', () => {
-	return gulp.src(path.src.html)
+	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe(htmlValidator());
 });
 
@@ -100,25 +100,25 @@ gulp.task(
 
 
 gulp.task(task.dev.js, () => {
-	return gulp.src(path.src.js)
+	return gulp.src(path.src.js, { allowEmpty: true })
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.dev.img, () => {
-	return gulp.src(path.src.img)
+	return gulp.src(path.src.img, { allowEmpty: true })
 	.pipe(gulp.dest(path.app.img))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.libs, () => {
-	return gulp.src(path.src.libs)
+	return gulp.src(path.src.libs, { allowEmpty: true })
 	.pipe(gulp.dest(path.app.libs))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.fonts, () => {
-	return gulp.src(path.src.fonts)
+	return gulp.src(path.src.fonts, { allowEmpty: true })
 	.pipe(gulp.dest(path.app.fonts))
 	.pipe(browserSync.stream());
 });
