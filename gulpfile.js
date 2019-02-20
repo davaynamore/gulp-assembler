@@ -87,7 +87,6 @@ gulp.task('validInFile', function () {
 });
 
 gulp.task('validInConsole', () => {
-	const ignoreDuplicateIds = (type, message) => console.dir(type, message);
 	return gulp.src(path.src.html)
 	.pipe(htmlValidator());
 });
