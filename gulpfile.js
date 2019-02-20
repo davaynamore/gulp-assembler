@@ -60,9 +60,7 @@ const path = {
 gulp.task(task.dev.css, () => {
 	return setTimeout(() => {
 		return gulp.src(path.src.scss, { sourcemaps: true })
-		.pipe($.sass({
-			outputStyle: 'compressed'
-		}).on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
+		.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 		.pipe($.autoprefixer({
 			browsers: ['last 2 versions'],
 			cascade: false
@@ -83,7 +81,7 @@ gulp.task('validInFile', function () {
   gulp.src(path.src.html)
     .pipe(htmlv({format: 'html'}))
     .pipe($.rename({
-	    basename: "validator"
+	    basename: "w3c"
   	}))
     .pipe(gulp.dest(path.app.html));
 });
