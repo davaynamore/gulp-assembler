@@ -88,7 +88,7 @@ gulp.task('validInFile', () => {
 
 gulp.task('validInConsole', () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe(htmlValidator());
+	.pipe(htmlValidator().on('error', $.notify.onError("Validation-Error: <%= error.message %>")));
 });
 
 gulp.task(
