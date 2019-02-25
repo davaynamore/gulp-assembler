@@ -3,8 +3,16 @@
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
 browserSync = require('browser-sync').create(),
-htmlv = require('gulp-html-validator'),
-htmlValidator = require('gulp-w3c-html-validator');
+htmlv = require('gulp-html-validator');
+
+let targetPath = process.argv.filter(el => el.indexOf('-path-') !== -1)[0];
+
+// if(!targetPath) {
+// 	return console.error('Set the target directory!');
+// } else {
+	targetPath = targetPath.split('').slice(6).join("") + '/';
+	console.log(targetPath);
+// }
 
 const task = {
 	dev: {
@@ -77,27 +85,14 @@ gulp.task(task.dev.html, () => {
 	.pipe(browserSync.stream());
 });
 
-gulp.task('validInFile', () => {
-  return gulp.src(path.src.html, { allowEmpty: true })
-    .pipe(htmlv({format: 'html'}))
-    .pipe($.rename({
-	    basename: "w3c"
-  	}))
-    .pipe(gulp.dest(path.app.html));
-});
-
-gulp.task('validInConsole', () => {
+gulp.task(task.validator, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe(htmlValidator().on('error', $.notify.onError("Validation-Error: <%= error.message %>")));
+	.pipe(htmlv({format: 'html'}).on('error', $.notify.onError("Connection-Error: <%= error.message %>")))
+	.pipe($.rename({
+		basename: "w3c"
+	}))
+	.pipe(gulp.dest(path.app.html));
 });
-
-gulp.task(
-	task.validator,
-	gulp.parallel(
-		'validInFile',
-		'validInConsole'
-		));
-
 
 gulp.task(task.dev.js, () => {
 	return gulp.src(path.src.js, { allowEmpty: true })
