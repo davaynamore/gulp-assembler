@@ -5,15 +5,6 @@ $ = require('gulp-load-plugins')(),
 browserSync = require('browser-sync').create(),
 htmlv = require('gulp-html-validator');
 
-let targetPath = process.argv.filter(el => el.indexOf('-path-') !== -1)[0];
-
-// if(!targetPath) {
-// 	return console.error('Set the target directory!');
-// } else {
-	targetPath = targetPath.split('').slice(6).join("") + '/';
-	console.log(targetPath);
-// }
-
 const task = {
 	dev: {
 		html: 'html:dev',
