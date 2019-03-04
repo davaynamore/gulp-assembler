@@ -1,11 +1,10 @@
 {
-  "name": "gulp-seed4",
+  "name": "gulp-assebler",
   "version": "1.0.0",
   "description": "Front-End assembler for Beetroot Academy's students",
-  "main": "index.js",
+  "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "gulp"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sergey Chuprina",
   "license": "ISC",
