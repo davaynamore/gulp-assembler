@@ -4,7 +4,11 @@ const prefix = '-path-';
 let targetPath = process.argv.filter(el => el.indexOf(prefix) !== -1)[0];
 
 if(!targetPath) {
-	return console.error('Set the target directory!');
+	return console.error(
+`#################################################################################\n
+Set the target directory! \nYou should type:\ngulp -path-nameOfYourProjectDirectory
+\n#################################################################################`
+		);
 } else {
 	targetPath = targetPath.split('').slice(prefix.length).join("");
 }
