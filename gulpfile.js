@@ -78,11 +78,6 @@ const path = {
 	template: 'template/**/*.*'
 }
 
-gulp.task(task.create, () => {
-	return gulp.src(path.template, { allowEmpty: true })
-	.pipe(gulp.dest(`${targetPath}/`));
-});
-
 gulp.task(task.dev.css, () => {
 	return setTimeout(() => {
 		return gulp.src(path.src.scss, { sourcemaps: true, allowEmpty: true })
@@ -138,7 +133,7 @@ gulp.task(task.build.fonts, () => {
 
 gulp.task(task.watch, () => {
 	$.watch(path.watch.scss, gulp.series(task.dev.css)),
-	$.watch(path.watch.html, gulp.parallel(task.dev.html, task.validator)),
+	$.watch(path.watch.html, gulp.series(task.dev.html, task.validator)),
 	$.watch(path.watch.js, gulp.series(task.dev.js)),
 	$.watch(path.watch.img, gulp.series(task.dev.img)),
 	$.watch(path.watch.fonts, gulp.series(task.build.fonts)),
@@ -186,6 +181,6 @@ return new Promise(function(resolve) {
   });
 });
 
-gulp.task(task.startDev, gulp.series(task.check, task.clean, gulp.parallel(task.development)));
+gulp.task(task.startDev, gulp.series(task.check, task.clean, task.development));
 
 gulp.task(task.default, gulp.parallel(task.startDev));
