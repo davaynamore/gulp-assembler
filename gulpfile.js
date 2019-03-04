@@ -44,7 +44,6 @@ const task = {
 	development: 'dev',
 	default: 'default',
 	validator: 'valid',
-	create: 'create',
 	check: 'check',
 	startDev: 'startDev',
 }
