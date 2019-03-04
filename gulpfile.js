@@ -5,9 +5,13 @@ let targetPath = process.argv.filter(el => el.indexOf(prefix) !== -1)[0];
 
 if(!targetPath) {
 	return console.error(
-`#################################################################################\n
-Set the target directory! \nYou should type:\ngulp -path-nameOfYourProjectDirectory
-\n#################################################################################`
+`
+\n#################################################################################
+\nSet the target directory!
+\nYou should type:
+\ngulp -path-nameOfYourProjectDirectory
+\n#################################################################################
+`
 		);
 } else {
 	targetPath = targetPath.split('').slice(prefix.length).join("");
