@@ -1,5 +1,2 @@
 node_modules
 package-lock.json
-directory/src/img/*
-directory/src/libs/*
-directory/src/fonts/*

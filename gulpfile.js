@@ -7,11 +7,11 @@ if(!targetPath) {
 	return console.error('Set the target directory!');
 } else {
 	targetPath = targetPath.split('').slice(prefix.length).join("");
-	console.log(targetPath);
 }
 
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
+fs = require('fs'),
 browserSync = require('browser-sync').create(),
 htmlv = require('gulp-html-validator');
 
@@ -35,7 +35,10 @@ const task = {
 	clean: 'clean',
 	development: 'dev',
 	default: 'default',
-	validator: 'valid'
+	validator: 'valid',
+	create: 'create',
+	check: 'check',
+	startDev: 'startDev',
 }
 
 const path = {
@@ -43,9 +46,9 @@ const path = {
 		html: `${targetPath}/src/index.html`,
 		js: `${targetPath}/src/js/script.js`,
 		scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
-		img: `${targetPath}/src/img/**/*.*`,
-		fonts: `${targetPath}/src/fonts/**/*.*`,
-		libs: `${targetPath}/src/libs/**/*.*`,
+		img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
+		fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
+		libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`]
 	},
 	app: {
 		html: `${targetPath}/app/`,
@@ -63,8 +66,14 @@ const path = {
 		fonts: `${targetPath}/src/fonts/**/*.*`,
 		libs: `${targetPath}/src/libs/**/*.*`,
 	},
-	serverRoot: `${targetPath}/app`
+	serverRoot: `${targetPath}/app`,
+	template: 'template/**/*.*'
 }
+
+gulp.task(task.create, () => {
+	return gulp.src(path.template, { allowEmpty: true })
+	.pipe(gulp.dest(`${targetPath}/`));
+});
 
 gulp.task(task.dev.css, () => {
 	return setTimeout(() => {
@@ -159,4 +168,16 @@ gulp.task(
 		task.connect
 		));
 
-gulp.task(task.default, gulp.series(task.clean, gulp.parallel(task.development)));
+gulp.task(task.check, () => {
+return new Promise(function(resolve) {
+    if(!fs.existsSync(targetPath)) {
+    	gulp.src(path.template, { allowEmpty: true })
+				.pipe(gulp.dest(`${targetPath}/`));
+		}
+		setTimeout(resolve, 2000);
+  });
+});
+
+gulp.task(task.startDev, gulp.series(task.check, task.clean, gulp.parallel(task.development)));
+
+gulp.task(task.default, gulp.parallel(task.startDev));
