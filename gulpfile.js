@@ -1,6 +1,6 @@
 'use strict';
 
-const prefix = '-path-';
+const prefix = '---';
 let targetPath = process.argv.filter(el => el.indexOf(prefix) !== -1)[0];
 
 if(!targetPath) {
@@ -9,7 +9,7 @@ if(!targetPath) {
 \n#################################################################################
 \nSet the target directory!
 \nYou should type:
-\ngulp -path-nameOfYourProjectDirectory
+\ngulp ${prefix}yourProjectDirectoryName
 \n#################################################################################
 `
 		);
@@ -85,7 +85,6 @@ gulp.task(task.dev.css, () => {
 			browsers: ['last 2 versions'],
 			cascade: false
 		}))
-		.pipe($.csscomb())
 		.pipe(gulp.dest(path.app.css), { sourcemaps: true })
 		.pipe(browserSync.stream());
 	}, 500);
