@@ -14,10 +14,10 @@ npm install gulp-cli -g
 git clone https://github.com/davaynamore/gulp-assembler.git
 ```
 
-* Copy files in cloned directory _gulp-assembler_ to your project's root directory
+* Copy files from cloned directory _gulp-assembler_ to your projects' root directory
 * Move to your new project's directory:
 ```
-cd your_project`s_root_directory
+cd your_projects'_root_directory
 ```
 * Install dependencies:
 ```
@@ -25,5 +25,5 @@ npm i
 ```
 * To start development run:
 ```
-gulp ---project`s_directory_name
+gulp ---project's_directory_name
 ```
