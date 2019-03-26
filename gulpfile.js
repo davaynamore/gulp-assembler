@@ -36,7 +36,8 @@ const task = {
 		html: 'html:build',
 		css: 'css:build',
 		js: 'js:build',
-		img: 'img:build'
+		img: 'img:build',
+		fav: 'fav:build'
 	},
 	watch: 'watch',
 	connect: 'connect',
@@ -45,7 +46,7 @@ const task = {
 	default: 'default',
 	validator: 'valid',
 	check: 'check',
-	startDev: 'startDev',
+	startDev: 'startDev'
 }
 
 const path = {
@@ -55,7 +56,8 @@ const path = {
 		scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
 		img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
 		fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
-		libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`]
+		libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`],
+		fav: [`${targetPath}/src/fav/**/*.*`,`!${targetPath}/src/fav/**/*.ini`]
 	},
 	app: {
 		html: `${targetPath}/app/`,
@@ -64,6 +66,7 @@ const path = {
 		img: `${targetPath}/app/img/`,
 		fonts: `${targetPath}/app/fonts/`,
 		libs: `${targetPath}/app/libs/`,
+		fav: `${targetPath}/app/fav/`
 	},
 	watch: {
 		html: `${targetPath}/src/*.html`,
@@ -72,6 +75,7 @@ const path = {
 		img: `${targetPath}/src/img/**/*.*`,
 		fonts: `${targetPath}/src/fonts/**/*.*`,
 		libs: `${targetPath}/src/libs/**/*.*`,
+		fav: `${targetPath}/src/fav/**/*.*`
 	},
 	serverRoot: `${targetPath}/app`,
 	template: 'template/**/*.*'
@@ -93,6 +97,7 @@ gulp.task(task.dev.css, () => {
 
 gulp.task(task.dev.html, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
+	.pipe($.rigger())
 	.pipe(gulp.dest(path.app.html))
 	.pipe(browserSync.stream());
 });
@@ -108,6 +113,7 @@ gulp.task(task.validator, () => {
 
 gulp.task(task.dev.js, () => {
 	return gulp.src(path.src.js, { allowEmpty: true })
+	.pipe($.rigger())
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
@@ -124,6 +130,12 @@ gulp.task(task.build.libs, () => {
 	.pipe(browserSync.stream());
 });
 
+gulp.task(task.build.fav, () => {
+	return gulp.src(path.src.fav, { allowEmpty: true })
+	.pipe(gulp.dest(path.app.fav))
+	.pipe(browserSync.stream());
+});
+
 gulp.task(task.build.fonts, () => {
 	return gulp.src(path.src.fonts, { allowEmpty: true })
 	.pipe(gulp.dest(path.app.fonts))
@@ -136,7 +148,8 @@ gulp.task(task.watch, () => {
 	$.watch(path.watch.js, gulp.series(task.dev.js)),
 	$.watch(path.watch.img, gulp.series(task.dev.img)),
 	$.watch(path.watch.fonts, gulp.series(task.build.fonts)),
-	$.watch(path.watch.libs, gulp.series(task.build.libs))
+	$.watch(path.watch.libs, gulp.series(task.build.libs)),
+	$.watch(path.watch.fav, gulp.series(task.build.fav))
 });
 
 gulp.task(task.connect, () => {
@@ -166,6 +179,7 @@ gulp.task(
 		task.dev.js,
 		task.dev.img,
 		task.build.libs,
+		task.build.fav,
 		task.build.fonts,
 		task.connect
 		));
