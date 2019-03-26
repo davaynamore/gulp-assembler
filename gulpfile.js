@@ -69,7 +69,7 @@ const path = {
 		fav: `${targetPath}/app/fav/`
 	},
 	watch: {
-		html: `${targetPath}/src/*.html`,
+		html: [`${targetPath}/src/*.html`, `${targetPath}/src/partials/**/*.*`],
 		js: `${targetPath}/src/js/*.js`,
 		scss: `${targetPath}/src/scss/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
