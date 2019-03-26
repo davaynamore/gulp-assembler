@@ -1,4 +1,4 @@
-# Gulp-seed
+# Gulp-assembler
 _fe-assembler for beetroot-students_
 
 **Required:**
