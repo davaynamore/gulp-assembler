@@ -1,4 +1,4 @@
-# Gulp-seed
+# Gulp-assembler
 _fe-assembler for beetroot-students_
 
 **Required:**
@@ -14,13 +14,10 @@ npm install gulp-cli -g
 git clone https://github.com/davaynamore/gulp-assembler.git
 ```
 
-* Rename cloned directory _gulp-assembler_ to your project's name:
-```
-mv gulp-assembler your_project_name
-```
+* Copy files from cloned directory _gulp-assembler_ to your projects' root directory
 * Move to your new project's directory:
 ```
-cd your_project_name
+cd your_projects'_root_directory
 ```
 * Install dependencies:
 ```
@@ -28,9 +25,5 @@ npm i
 ```
 * To start development run:
 ```
-npm run dev
-```
-or
-```
-gulp
+gulp ---project's_directory_name
 ```
