@@ -5,13 +5,13 @@ let targetPath = process.argv.filter(el => el.indexOf(prefix) !== -1)[0];
 
 if(!targetPath) {
 	return console.error(
-`
-\n#################################################################################
-\nSet the target directory!
-\nYou should type:
-\ngulp ${prefix}yourProjectDirectoryName
-\n#################################################################################
-`
+		`
+		\n#################################################################################
+		\nSet the target directory!
+		\nYou should type:
+		\ngulp ${prefix}yourProjectDirectoryName
+		\n#################################################################################
+		`
 		);
 } else {
 	targetPath = targetPath.split('').slice(prefix.length).join("");
@@ -43,10 +43,12 @@ const task = {
 	connect: 'connect',
 	clean: 'clean',
 	development: 'dev',
+	production: 'production',
 	default: 'default',
 	validator: 'valid',
 	check: 'check',
-	startDev: 'startDev'
+	startDev: 'startDev',
+	startBuild: 'build'
 }
 
 const path = {
@@ -83,16 +85,30 @@ const path = {
 
 gulp.task(task.dev.css, () => {
 	return setTimeout(() => {
-		return gulp.src(path.src.scss, { sourcemaps: true, allowEmpty: true })
+		return gulp.src(path.src.scss, { allowEmpty: true })
+		.pipe($.sourcemaps.init())
 		.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 		.pipe($.autoprefixer({
 			browsers: ['last 2 versions'],
 			cascade: false
 		}))
 		.pipe($.csscomb())
-		.pipe(gulp.dest(path.app.css), { sourcemaps: true })
+		.pipe($.sourcemaps.write())
+		.pipe(gulp.dest(path.app.css))
 		.pipe(browserSync.stream());
 	}, 500);
+});
+
+gulp.task(task.build.css, () => {
+	return gulp.src(path.src.scss, { allowEmpty: true })
+	.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
+	.pipe($.autoprefixer({
+		browsers: ['last 2 versions'],
+		cascade: false
+	}))
+	.pipe($.csscomb())
+	.pipe($.cssnano())
+	.pipe(gulp.dest(path.app.css));
 });
 
 gulp.task(task.dev.html, () => {
@@ -100,6 +116,13 @@ gulp.task(task.dev.html, () => {
 	.pipe($.rigger())
 	.pipe(gulp.dest(path.app.html))
 	.pipe(browserSync.stream());
+});
+
+gulp.task(task.build.html, () => {
+	return gulp.src(path.src.html, { allowEmpty: true })
+	.pipe($.rigger())
+	.pipe($.htmlmin({ collapseWhitespace: true }))
+	.pipe(gulp.dest(path.app.html));
 });
 
 gulp.task(task.validator, () => {
@@ -118,8 +141,23 @@ gulp.task(task.dev.js, () => {
 	.pipe(browserSync.stream());
 });
 
+gulp.task(task.build.js, () => {
+	return gulp.src(path.src.js, { allowEmpty: true })
+	.pipe($.rigger())
+	.pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
+	.pipe(gulp.dest(path.app.js))
+	.pipe(browserSync.stream());
+});
+
 gulp.task(task.dev.img, () => {
 	return gulp.src(path.src.img, { allowEmpty: true })
+	.pipe(gulp.dest(path.app.img))
+	.pipe(browserSync.stream());
+});
+
+gulp.task(task.build.img, () => {
+	return gulp.src(path.src.img, { allowEmpty: true })
+	.pipe($.imagemin())
 	.pipe(gulp.dest(path.app.img))
 	.pipe(browserSync.stream());
 });
@@ -184,16 +222,29 @@ gulp.task(
 		task.connect
 		));
 
+gulp.task(
+	task.production,
+	gulp.parallel(
+		task.build.html,
+		task.build.css,
+		task.build.js,
+		task.build.img,
+		task.build.libs,
+		task.build.fav,
+		task.build.fonts
+		));
+
 gulp.task(task.check, () => {
-return new Promise(function(resolve) {
-    if(!fs.existsSync(targetPath)) {
-    	gulp.src(path.template, { allowEmpty: true })
-				.pipe(gulp.dest(`${targetPath}/`));
+	return new Promise(function(resolve) {
+		if(!fs.existsSync(targetPath)) {
+			gulp.src(path.template, { allowEmpty: true })
+			.pipe(gulp.dest(`${targetPath}/`));
 		}
 		setTimeout(resolve, 2000);
-  });
+	});
 });
 
+gulp.task(task.startBuild, gulp.series(task.check, task.clean, task.production));
 gulp.task(task.startDev, gulp.series(task.check, task.clean, task.development));
 
 gulp.task(task.default, gulp.parallel(task.startDev));
