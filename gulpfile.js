@@ -80,7 +80,8 @@ const path = {
 		fav: `${targetPath}/src/fav/**/*.*`
 	},
 	serverRoot: `${targetPath}/app`,
-	template: 'template/**/*.*'
+	template: 'template/**/*.*',
+	validation: `${targetPath}/app/index.html`,
 }
 
 gulp.task(task.dev.css, () => {
@@ -114,8 +115,7 @@ gulp.task(task.build.css, () => {
 gulp.task(task.dev.html, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe($.rigger())
-	.pipe(gulp.dest(path.app.html))
-	.pipe(browserSync.stream());
+	.pipe(gulp.dest(path.app.html));
 });
 
 gulp.task(task.build.html, () => {
@@ -126,12 +126,15 @@ gulp.task(task.build.html, () => {
 });
 
 gulp.task(task.validator, () => {
-	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe(htmlv({format: 'html'}).on('error', $.notify.onError("Connection-Error: <%= error.message %>")))
-	.pipe($.rename({
-		basename: "w3c"
-	}))
-	.pipe(gulp.dest(path.app.html));
+	return setTimeout(() => {
+		return gulp.src(path.validation, { allowEmpty: true })
+		.pipe(htmlv({format: 'html'}).on('error', $.notify.onError("Connection-Error: <%= error.message %>")))
+		.pipe($.rename({
+			basename: "w3c"
+		}))
+		.pipe(gulp.dest(path.app.html))
+		.pipe(browserSync.stream());
+	}, 500);
 });
 
 gulp.task(task.dev.js, () => {
