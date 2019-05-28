@@ -202,7 +202,8 @@ gulp.task(task.connect, () => {
 		server: {
 			baseDir: path.serverRoot,
 			open: true
-		}
+		},
+		tunnel: true
 	});
 });
 
