@@ -73,7 +73,7 @@ const path = {
 	watch: {
 		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/partials/**/*.*`],
 		js: `${targetPath}/src/js/*.js`,
-		scss: `${targetPath}/src/scss/*.+(scss|sass)`,
+		scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
 		fonts: `${targetPath}/src/fonts/**/*.*`,
 		libs: `${targetPath}/src/libs/**/*.*`,
