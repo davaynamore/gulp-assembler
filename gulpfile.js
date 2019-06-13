@@ -21,7 +21,13 @@ const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
 fs = require('fs'),
 browserSync = require('browser-sync').create(),
-htmlv = require('gulp-html-validator');
+htmlv = require('gulp-html-validator'),
+browserify = require("browserify"),
+source = require('vinyl-source-stream'),
+babelify = require("babelify"),
+tsify = require("tsify");
+
+
 
 const task = {
 	dev: {
@@ -54,7 +60,6 @@ const task = {
 const path = {
 	src: {
 		html: `${targetPath}/src/*.+(ejs|html)`,
-		js: `${targetPath}/src/js/*.js`,
 		scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
 		img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
 		fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
@@ -71,18 +76,32 @@ const path = {
 		fav: `${targetPath}/app/fav/`
 	},
 	watch: {
-		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/partials/**/*.*`],
-		js: `${targetPath}/src/js/*.js`,
+		html: `${targetPath}/src/**/*.+(html|ejs)`,
+		js: `${targetPath}/src/js/**/*.+(js|ts)`,
 		scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
 		fonts: `${targetPath}/src/fonts/**/*.*`,
 		libs: `${targetPath}/src/libs/**/*.*`,
 		fav: `${targetPath}/src/fav/**/*.*`
 	},
+	jsSrcDir: `${targetPath}/src/js/`,
 	serverRoot: `${targetPath}/app`,
 	template: 'template/**/*.*',
 	validation: `${targetPath}/app/index.html`,
 }
+
+let jsFileName = null;
+
+const jsInit = () => {
+	const r = fs.readdirSync(path.jsSrcDir, (err, files) => {
+		if(err) throw new Error('No files in JS directory');
+		return files;
+	}).filter(file => file.indexOf('.ts') >= 0)[0].split('.');
+	path.src.js = `${targetPath}/src/js/${r[0]}.${r[1]}`;
+	jsFileName = r[0];
+}
+
+jsInit();
 
 gulp.task(task.dev.css, () => {
 	return setTimeout(() => {
@@ -142,15 +161,23 @@ gulp.task(task.validator, () => {
 });
 
 gulp.task(task.dev.js, () => {
-	return gulp.src(path.src.js, { allowEmpty: true })
-	.pipe($.rigger())
+
+	return browserify({
+		basedir: '.',
+		debug: true,
+		entries: path.src.js,
+		cache: {},
+		packageCache: {}
+	})
+	.plugin(tsify)
+	.bundle()
+	.pipe(source(`${jsFileName}.js`))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.js, () => {
 	return gulp.src(path.src.js, { allowEmpty: true })
-	.pipe($.rigger())
 	.pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
