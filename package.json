@@ -28,5 +28,11 @@
     "gulp-uglify": "^3.0.2",
     "gulp-watch": "^5.0.1",
     "node-sass": "^4.11.0"
-  }
+  },
+   "browserslist": [
+    "last 2 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
 }
