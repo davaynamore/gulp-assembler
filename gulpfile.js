@@ -21,7 +21,8 @@ const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
 fs = require('fs'),
 browserSync = require('browser-sync').create(),
-htmlv = require('gulp-html-validator');
+htmlv = require('gulp-html-validator'),
+locals = require('gulp-ejs-locals');
 
 const task = {
 	dev: {
@@ -71,7 +72,7 @@ const path = {
 		fav: `${targetPath}/app/fav/`
 	},
 	watch: {
-		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/partials/**/*.*`],
+		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/view/**/*.*`],
 		js: `${targetPath}/src/js/*.js`,
 		scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
@@ -114,6 +115,7 @@ gulp.task(task.build.css, () => {
 gulp.task(task.dev.html, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe($.rigger())
+	.pipe(locals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.rename({ extname: '.html' }))
 	.pipe(gulp.dest(path.app.html));
