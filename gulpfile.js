@@ -22,7 +22,11 @@ $ = require('gulp-load-plugins')(),
 fs = require('fs'),
 browserSync = require('browser-sync').create(),
 htmlv = require('gulp-html-validator'),
-locals = require('gulp-ejs-locals');
+locals = require('gulp-ejs-locals'),
+browserify = require("browserify"),
+source = require('vinyl-source-stream'),
+babelify = require("babelify"),
+tsify = require("tsify");
 
 const task = {
 	dev: {
@@ -55,8 +59,8 @@ const task = {
 const path = {
 	src: {
 		html: `${targetPath}/src/*.+(ejs|html)`,
-		js: `${targetPath}/src/js/*.js`,
 		scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
+		js: `${targetPath}/src/js/script.ts`,
 		img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
 		fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
 		libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`],
@@ -73,7 +77,7 @@ const path = {
 	},
 	watch: {
 		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/view/**/*.*`],
-		js: `${targetPath}/src/js/*.js`,
+		js: `${targetPath}/src/js/**/*.+(js|ts)`,
 		scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
 		fonts: `${targetPath}/src/fonts/**/*.*`,
@@ -104,7 +108,6 @@ gulp.task(task.build.css, () => {
 	return gulp.src(path.src.scss, { allowEmpty: true })
 	.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 	.pipe($.autoprefixer({
-		browsers: ['last 2 versions'],
 		cascade: false
 	}))
 	.pipe($.csscomb())
@@ -143,15 +146,22 @@ gulp.task(task.validator, () => {
 });
 
 gulp.task(task.dev.js, () => {
-	return gulp.src(path.src.js, { allowEmpty: true })
-	.pipe($.rigger())
+	return browserify({
+		basedir: '.',
+		debug: true,
+		entries: path.src.js,
+		cache: {},
+		packageCache: {}
+	})
+	.plugin(tsify)
+	.bundle()
+	.pipe(source('script.js'))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.js, () => {
 	return gulp.src(path.src.js, { allowEmpty: true })
-	.pipe($.rigger())
 	.pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
