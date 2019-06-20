@@ -123,7 +123,6 @@ gulp.task(task.build.css, () => {
 	return gulp.src(path.src.scss, { allowEmpty: true })
 	.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 	.pipe($.autoprefixer({
-		browsers: ['last 2 versions'],
 		cascade: false
 	}))
 	.pipe($.csscomb())

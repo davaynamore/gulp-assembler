@@ -36,5 +36,11 @@
     "tsify": "^4.0.1",
     "typescript": "^3.5.1",
     "vinyl-source-stream": "^2.0.0"
-  }
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
 }
