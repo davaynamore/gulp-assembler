@@ -23,8 +23,9 @@ fs = require('fs'),
 buffer = require('vinyl-buffer'),
 browserSync = require('browser-sync').create(),
 htmlv = require('gulp-html-validator'),
+locals = require('gulp-ejs-locals'),
+babelify = require("babelify"),
 browserify = require('browserify'),
-babelify = require('babelify'),
 source = require('vinyl-source-stream');
 
 const task = {
@@ -75,8 +76,8 @@ const path = {
 		fav: `${targetPath}/app/fav/`
 	},
 	watch: {
-		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/partials/**/*.*`],
-		js: `${targetPath}/src/js/**/*.js`,
+		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/view/**/*.*`],
+		js: `${targetPath}/src/js/**/*.+(js|ts)`,
 		scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
 		fonts: `${targetPath}/src/fonts/**/*.*`,
@@ -107,7 +108,6 @@ gulp.task(task.build.css, () => {
 	return gulp.src(path.src.scss, { allowEmpty: true })
 	.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 	.pipe($.autoprefixer({
-		browsers: ['last 2 versions'],
 		cascade: false
 	}))
 	.pipe($.csscomb())
@@ -118,6 +118,7 @@ gulp.task(task.build.css, () => {
 gulp.task(task.dev.html, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe($.rigger())
+	.pipe(locals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.rename({ extname: '.html' }))
 	.pipe(gulp.dest(path.app.html));
@@ -146,40 +147,40 @@ gulp.task(task.validator, () => {
 
 gulp.task(task.dev.js, () => {
 	return browserify({
-    entries: [
-      path.src.js
-    ]
-  })
-  .transform('babelify',
-  	{
-        presets: ["@babel/preset-env"],
-        sourceMaps: true,
-        global: true
-    }
-   )
-  .bundle()
-  .pipe(source('bundle.js'))
+		entries: [
+		path.src.js
+		]
+	})
+	.transform('babelify',
+	{
+		presets: ["@babel/preset-env"],
+		sourceMaps: true,
+		global: true
+	}
+	)
+	.bundle()
+	.pipe(source('bundle.js'))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.js, () => {
-		return browserify({
-    entries: [
-      path.src.js
-    ]
-  })
-  .transform('babelify',
-  	{
-        presets: ["@babel/preset-env"],
-        sourceMaps: true,
-        global: true
-    }
-   )
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(buffer())
-  .pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
+	return browserify({
+		entries: [
+		path.src.js
+		]
+	})
+	.transform('babelify',
+	{
+		presets: ["@babel/preset-env"],
+		sourceMaps: true,
+		global: true
+	}
+	)
+	.bundle()
+	.pipe(source('bundle.js'))
+	.pipe(buffer())
+	.pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });

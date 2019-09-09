@@ -1,5 +1,7 @@
-<%- include('partials/page-header'); -%>
+<% layout('./view/layout/page') -%>
+<% block('title', 'Page title'); -%>
 
-<%- include('partials/body'); -%>
+<%-partial('./view/partials/sections/nav') %>
 
-<%- include('partials/page-footer'); -%>
+<h1><%= blocks.title %></h1>
+<p>Welcome to <%= blocks.title %></p>
