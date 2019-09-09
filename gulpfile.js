@@ -20,13 +20,14 @@ if(!targetPath) {
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
 fs = require('fs'),
+buffer = require('vinyl-buffer'),
 browserSync = require('browser-sync').create(),
 htmlv = require('gulp-html-validator'),
 locals = require('gulp-ejs-locals'),
-browserify = require("browserify"),
-source = require('vinyl-source-stream'),
 babelify = require("babelify"),
-tsify = require("tsify");
+browserify = require('browserify'),
+source = require('vinyl-source-stream');
+
 
 const task = {
 	dev: {
@@ -59,8 +60,8 @@ const task = {
 const path = {
 	src: {
 		html: `${targetPath}/src/*.+(ejs|html)`,
+		js: `${targetPath}/src/js/app.js`,
 		scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
-		js: `${targetPath}/src/js/script.ts`,
 		img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
 		fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
 		libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`],
@@ -147,21 +148,39 @@ gulp.task(task.validator, () => {
 
 gulp.task(task.dev.js, () => {
 	return browserify({
-		basedir: '.',
-		debug: true,
-		entries: path.src.js,
-		cache: {},
-		packageCache: {}
+		entries: [
+		path.src.js
+		]
 	})
-	.plugin(tsify)
+	.transform('babelify',
+	{
+		presets: ["@babel/preset-env"],
+		sourceMaps: true,
+		global: true
+	}
+	)
 	.bundle()
-	.pipe(source('script.js'))
+	.pipe(source('bundle.js'))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.js, () => {
-	return gulp.src(path.src.js, { allowEmpty: true })
+	return browserify({
+		entries: [
+		path.src.js
+		]
+	})
+	.transform('babelify',
+	{
+		presets: ["@babel/preset-env"],
+		sourceMaps: true,
+		global: true
+	}
+	)
+	.bundle()
+	.pipe(source('bundle.js'))
+	.pipe(buffer())
 	.pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
