@@ -9,7 +9,11 @@
   "author": "Sergey Chuprina",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
+    "browserify": "^16.5.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-clean": "^0.4.0",
@@ -27,12 +31,11 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "gulp-watch": "^5.0.1",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.11.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
-   "browserslist": [
-    "last 2 version",
-    "> 1%",
-    "maintained node versions",
-    "not dead"
+  "browserslist": [
+    "last 15 version"
   ]
 }

@@ -20,8 +20,12 @@ if(!targetPath) {
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
 fs = require('fs'),
+buffer = require('vinyl-buffer'),
 browserSync = require('browser-sync').create(),
-htmlv = require('gulp-html-validator');
+htmlv = require('gulp-html-validator'),
+browserify = require('browserify'),
+babelify = require('babelify'),
+source = require('vinyl-source-stream');
 
 const task = {
 	dev: {
@@ -54,7 +58,7 @@ const task = {
 const path = {
 	src: {
 		html: `${targetPath}/src/*.+(ejs|html)`,
-		js: `${targetPath}/src/js/*.js`,
+		js: `${targetPath}/src/js/app.js`,
 		scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
 		img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
 		fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
@@ -72,7 +76,7 @@ const path = {
 	},
 	watch: {
 		html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/partials/**/*.*`],
-		js: `${targetPath}/src/js/*.js`,
+		js: `${targetPath}/src/js/**/*.js`,
 		scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
 		img: `${targetPath}/src/img/**/*.*`,
 		fonts: `${targetPath}/src/fonts/**/*.*`,
@@ -141,16 +145,41 @@ gulp.task(task.validator, () => {
 });
 
 gulp.task(task.dev.js, () => {
-	return gulp.src(path.src.js, { allowEmpty: true })
-	.pipe($.rigger())
+	return browserify({
+    entries: [
+      path.src.js
+    ]
+  })
+  .transform('babelify',
+  	{
+        presets: ["@babel/preset-env"],
+        sourceMaps: true,
+        global: true
+    }
+   )
+  .bundle()
+  .pipe(source('bundle.js'))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
 
 gulp.task(task.build.js, () => {
-	return gulp.src(path.src.js, { allowEmpty: true })
-	.pipe($.rigger())
-	.pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
+		return browserify({
+    entries: [
+      path.src.js
+    ]
+  })
+  .transform('babelify',
+  	{
+        presets: ["@babel/preset-env"],
+        sourceMaps: true,
+        global: true
+    }
+   )
+  .bundle()
+  .pipe(source('bundle.js'))
+  .pipe(buffer())
+  .pipe($.uglify().on('error', $.notify.onError("JS-Error: <%= error.message %>")))
 	.pipe(gulp.dest(path.app.js))
 	.pipe(browserSync.stream());
 });
