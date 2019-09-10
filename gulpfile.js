@@ -117,7 +117,6 @@ gulp.task(task.build.css, () => {
 
 gulp.task(task.dev.html, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe($.rigger())
 	.pipe(locals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.rename({ extname: '.html' }))
@@ -126,7 +125,7 @@ gulp.task(task.dev.html, () => {
 
 gulp.task(task.build.html, () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe($.rigger())
+	.pipe(locals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.rename({ extname: '.html' }))
 	.pipe($.htmlmin({ collapseWhitespace: true }))
@@ -147,9 +146,7 @@ gulp.task(task.validator, () => {
 
 gulp.task(task.dev.js, () => {
 	return browserify({
-		entries: [
-		path.src.js
-		]
+		entries: [path.src.js]
 	})
 	.transform('babelify',
 	{
@@ -166,9 +163,7 @@ gulp.task(task.dev.js, () => {
 
 gulp.task(task.build.js, () => {
 	return browserify({
-		entries: [
-		path.src.js
-		]
+		entries: [path.src.js]
 	})
 	.transform('babelify',
 	{
