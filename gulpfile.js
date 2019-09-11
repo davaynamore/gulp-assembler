@@ -1,8 +1,6 @@
 'use strict';
-const { targetPath, vars } = require('./modules/vars'),
-{ task } = vars;
-
-const gulp = require('gulp'),
+const { task } = require('./modules/vars').vars,
+gulp = require('gulp'),
 html = require('./modules/html'),
 scss = require('./modules/scss'),
 js = require('./modules/scripts'),
