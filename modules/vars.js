@@ -1,5 +1,19 @@
-const prefix = '---',
-targetPath = process.argv.filter(el => el.indexOf(prefix) !== -1)[0].split('').slice(prefix.length).join("");
+const prefix = '---';
+let param = process.argv.filter(el => el.indexOf(prefix) !== -1)[0];
+const paramError = () => {
+	console.error(
+		`
+		\n#################################################################################
+		\nSet the target directory!
+		\nYou should type:
+		\ngulp ${prefix}yourProjectDirectoryName
+		\n#################################################################################
+		`
+		);
+	return process.exit();
+}
+
+const targetPath = !param ? paramError() : param.split('').slice(prefix.length).join("");
 
 const vars = {
 	task: {
@@ -60,20 +74,6 @@ const vars = {
 		serverRoot: `${targetPath}/app`,
 		template: 'template/**/*.*',
 		validation: `${targetPath}/app/index.html`,
-	},
-	check: (targetPath) => {
-		if(!targetPath) {
-			console.error(
-				`
-				\n#################################################################################
-				\nSet the target directory!
-				\nYou should type:
-				\ngulp ${prefix}yourProjectDirectoryName
-				\n#################################################################################
-				`
-				);
-			return process.exit();
-		}
 	}
 }
 

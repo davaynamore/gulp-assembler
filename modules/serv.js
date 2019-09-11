@@ -5,14 +5,16 @@ browserSync = require('browser-sync').create(),
 { targetPath } = require('./vars'),
 { path, task } = require('./vars').vars;
 
+const reloadDelay = () => setTimeout(browserSync.reload, 500);
+
 const watch = () => {
-	$.watch(path.watch.scss, gulp.series(task.dev.css)).on('change', () => setTimeout(browserSync.reload, 500)),
-	$.watch(path.watch.html, gulp.series(task.dev.html, task.validator)).on('change', () => setTimeout(browserSync.reload, 500)),
-	$.watch(path.watch.js, gulp.series(task.dev.js)).on('change', () => setTimeout(browserSync.reload, 500)),
-	$.watch(path.watch.img, gulp.series(task.dev.img)).on('change', () => setTimeout(browserSync.reload, 500)),
-	$.watch(path.watch.fonts, gulp.series(task.build.fonts)).on('change', () => setTimeout(browserSync.reload, 500)),
-	$.watch(path.watch.libs, gulp.series(task.build.libs)).on('change', () => setTimeout(browserSync.reload, 500)),
-	$.watch(path.watch.fav, gulp.series(task.build.fav)).on('change', () => setTimeout(browserSync.reload, 500))
+	$.watch(path.watch.scss, gulp.series(task.dev.css)).on('change', reloadDelay),
+	$.watch(path.watch.html, gulp.series(task.dev.html, task.validator)).on('change', reloadDelay),
+	$.watch(path.watch.js, gulp.series(task.dev.js)).on('change', reloadDelay),
+	$.watch(path.watch.img, gulp.series(task.dev.img)).on('change', reloadDelay),
+	$.watch(path.watch.fonts, gulp.series(task.build.fonts)).on('change', reloadDelay),
+	$.watch(path.watch.libs, gulp.series(task.build.libs)).on('change', reloadDelay),
+	$.watch(path.watch.fav, gulp.series(task.build.fav)).on('change', reloadDelay)
 }
 
 const connect = () => {
