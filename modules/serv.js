@@ -46,10 +46,10 @@ const check = () => {
 }
 
 const serv = {
-	watch: watch,
-	connect: connect,
-	clean: clean,
-	check: check
+	watch,
+	connect,
+	clean,
+	check
 }
 
 module.exports = serv;

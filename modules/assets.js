@@ -18,9 +18,9 @@ const fonts = () => {
 }
 
 const assets = {
-	libs: libs,
-	fonts: fonts,
-	fav: fav
+	libs,
+	fonts,
+	fav
 }
 
 module.exports = assets;

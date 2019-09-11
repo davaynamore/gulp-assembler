@@ -28,8 +28,8 @@ const build = () => {
 }
 
 const scss = {
-	dev: dev,
-	build: build
+	dev,
+	build
 }
 
 module.exports = scss;

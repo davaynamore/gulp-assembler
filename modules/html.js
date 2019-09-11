@@ -33,9 +33,9 @@ const validator = () => {
 }
 
 const html = {
-	dev: dev,
-	build: build,
-	validator: validator
+	dev,
+	build,
+	validator
 }
 
 module.exports = html;

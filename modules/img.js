@@ -14,8 +14,8 @@ const build = () => {
 }
 
 const img = {
-	dev: dev,
-	build: build
+	dev,
+	build
 }
 
 module.exports = img;

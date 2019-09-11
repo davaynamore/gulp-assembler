@@ -41,8 +41,8 @@ const build = () => {
 }
 
 const js = {
-	dev: dev,
-	build: build
+	dev,
+	build
 }
 
 module.exports = js;
