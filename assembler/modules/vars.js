@@ -1,23 +1,17 @@
-const prefix = '---';
-let param = process.argv.filter(el => el.indexOf(prefix) !== -1)[0];
-const paramError = () => {
-	console.error(
-		`
-		\n#################################################################################
-		\nSet the target directory!
-		\nYou should type:
-		\ngulp ${prefix}yourProjectDirectoryName
-		\n#################################################################################
-		`
-		);
-	return process.exit();
+const argv = require('yargs').argv,
+info = require('./info');
+let param = null;
+
+for(let prop in argv) {
+	const reg = /-\w*/;
+	if(prop.match(reg)){
+		param = prop;
+	}
 }
 
-const targetPath = !param ? paramError() : param.split('').slice(prefix.length).join("");
+const targetPath = !param ? info() : param.split('').slice(1).join("");
 
 const vars = {
-	validation: true,
-	ejs: false,
 	task: {
 		dev: {
 			html: 'html:dev',
@@ -43,7 +37,8 @@ const vars = {
 		validator: 'valid',
 		check: 'check',
 		startDev: 'startDev',
-		startBuild: 'build'
+		startProd: 'prod',
+		info: 'info'
 	},
 	path: {
 		src: {
@@ -79,7 +74,12 @@ const vars = {
 			ejs: ['assembler/template/**/*.*', `!assembler/template/src/index.html`],
 		},
 		validation: `${targetPath}/app/index.html`,
-	}
+	},
+	params: {
+			ejs: '--ejs',
+			validation: '--notvalid',
+			pathPrefix: '---'
+		}
 }
 
 

@@ -7,7 +7,8 @@ scss = require('./assembler/modules/scss'),
 js = require('./assembler/modules/scripts'),
 img = require('./assembler/modules/img'),
 assets = require('./assembler/modules/assets'),
-serv = require('./assembler/modules/serv');
+serv = require('./assembler/modules/serv'),
+info = require('./assembler/modules/info');
 
 gulp.task(task.dev.css, scss.dev);
 gulp.task(task.build.css, scss.build);
@@ -25,6 +26,7 @@ gulp.task(task.watch, serv.watch);
 gulp.task(task.connect, serv.connect);
 gulp.task(task.clean, serv.clean);
 gulp.task(task.check, serv.check);
+gulp.task(task.help, help);
 
 gulp.task(
 	task.development,
@@ -53,6 +55,6 @@ gulp.task(
 		task.build.fonts
 		));
 
-gulp.task(task.startBuild, gulp.series(task.check, task.clean, task.production));
+gulp.task(task.startProd, gulp.series(task.check, task.clean, task.production));
 gulp.task(task.startDev, gulp.series(task.check, task.clean, task.development));
 gulp.task(task.default, gulp.parallel(task.startDev));

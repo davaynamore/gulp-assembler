@@ -1,4 +1,5 @@
 const gulp = require('gulp'),
+argv = require('yargs').argv,
 $ = require('gulp-load-plugins')(),
 fs = require('fs'),
 browserSync = require('browser-sync').create(),
@@ -36,7 +37,7 @@ const clean = () => {
 }
 
 const check = () => {
-	const srcPath = ejs ? path.template.ejs : path.template.simple;
+	const srcPath = argv.ejs ? path.template.ejs : path.template.simple;
 	return new Promise(function(resolve) {
 		if(!fs.existsSync(targetPath)) {
 			gulp.src(srcPath, { allowEmpty: true })

@@ -1,21 +1,11 @@
 const gulp = require('gulp'),
+argv = require('yargs').argv,
 $ = require('gulp-load-plugins')(),
 locals = require('gulp-ejs-locals'),
 htmlv = require('gulp-html-validator'),
-{ path, validation, ejs } = require('./vars').vars;
+{ path } = require('./vars').vars;
 
-const devSimple = () => {
-	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe(gulp.dest(path.app.html));
-}
-
-const buildSimple = () => {
-	return gulp.src(path.src.html, { allowEmpty: true })
-	.pipe($.htmlmin({ collapseWhitespace: true }))
-	.pipe(gulp.dest(path.app.html));
-}
-
-const devEjs = () => {
+const dev = () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe(locals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
@@ -23,7 +13,7 @@ const devEjs = () => {
 	.pipe(gulp.dest(path.app.html));
 }
 
-const buildEjs = () => {
+const build = () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe(locals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
@@ -33,7 +23,7 @@ const buildEjs = () => {
 }
 
 const validator = () => {
-	if(!validation) return;
+	if(argv.notvalid) return;
 	return setTimeout(() => {
 		return gulp.src(path.validation, { allowEmpty: true })
 		.pipe(htmlv({format: 'html'}).on('error', $.notify.onError("Connection-Error: <%= error.message %>")))
@@ -45,8 +35,8 @@ const validator = () => {
 }
 
 const html = {
-	dev: ejs ? devEjs : devSimple,
-	build: ejs ? buildEjs : buildSimple,
+	dev,
+	build,
 	validator
 }
 
