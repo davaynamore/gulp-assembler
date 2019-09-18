@@ -75,12 +75,7 @@ const vars = {
 			ejs: ['assembler/template/**/*.*', `!assembler/template/src/index.html`],
 		},
 		validation: `${targetPath}/app/index.html`,
-	},
-	params: {
-			ejs: '--ejs',
-			validation: '--notvalid',
-			pathPrefix: '---'
-		}
+	}
 }
 
 
