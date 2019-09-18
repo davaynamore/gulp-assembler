@@ -23,7 +23,6 @@
 // BgCyan = '\x1b[46m'
 // BgWhite = '\x1b[47m'
 
-
 const toYellow = (string) => {
 	return `\x1b[33m ${string} \x1b[0m`
 }

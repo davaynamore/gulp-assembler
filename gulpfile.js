@@ -26,7 +26,7 @@ gulp.task(task.watch, serv.watch);
 gulp.task(task.connect, serv.connect);
 gulp.task(task.clean, serv.clean);
 gulp.task(task.check, serv.check);
-gulp.task(task.help, help);
+gulp.task(task.info, info);
 
 gulp.task(
 	task.development,
