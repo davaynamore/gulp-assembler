@@ -9,7 +9,8 @@ for(let prop in argv) {
 	}
 }
 
-const targetPath = !param ? info() : param.split('').slice(1).join("");
+let targetPath = 'lessons/';
+targetPath += !param ? info() : param.split('').slice(1).join("");
 
 const vars = {
 	task: {
