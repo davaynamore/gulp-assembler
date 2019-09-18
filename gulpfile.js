@@ -1,12 +1,13 @@
 'use strict';
-const { task } = require('./modules/vars').vars,
+
+const { task } = require('./assembler/modules/vars').vars,
 gulp = require('gulp'),
-html = require('./modules/html'),
-scss = require('./modules/scss'),
-js = require('./modules/scripts'),
-img = require('./modules/img'),
-assets = require('./modules/assets'),
-serv = require('./modules/serv');
+html = require('./assembler/modules/html'),
+scss = require('./assembler/modules/scss'),
+js = require('./assembler/modules/scripts'),
+img = require('./assembler/modules/img'),
+assets = require('./assembler/modules/assets'),
+serv = require('./assembler/modules/serv');
 
 gulp.task(task.dev.css, scss.dev);
 gulp.task(task.build.css, scss.build);

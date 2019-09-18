@@ -3,7 +3,7 @@ $ = require('gulp-load-plugins')(),
 fs = require('fs'),
 browserSync = require('browser-sync').create(),
 { targetPath } = require('./vars'),
-{ path, task } = require('./vars').vars;
+{ path, task, ejs } = require('./vars').vars;
 
 const reloadDelay = () => setTimeout(browserSync.reload, 500);
 
@@ -36,9 +36,10 @@ const clean = () => {
 }
 
 const check = () => {
+	const srcPath = ejs ? path.template.ejs : path.template.simple;
 	return new Promise(function(resolve) {
 		if(!fs.existsSync(targetPath)) {
-			gulp.src(path.template, { allowEmpty: true })
+			gulp.src(srcPath, { allowEmpty: true })
 			.pipe(gulp.dest(`${targetPath}/`));
 		}
 		setTimeout(resolve, 2000);

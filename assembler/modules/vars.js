@@ -16,6 +16,8 @@ const paramError = () => {
 const targetPath = !param ? paramError() : param.split('').slice(prefix.length).join("");
 
 const vars = {
+	validation: true,
+	ejs: false,
 	task: {
 		dev: {
 			html: 'html:dev',
@@ -72,7 +74,10 @@ const vars = {
 			fav: `${targetPath}/src/fav/**/*.*`
 		},
 		serverRoot: `${targetPath}/app`,
-		template: 'template/**/*.*',
+		template: {
+			simple: ['assembler/template/**/*.*', `!assembler/template/src/index.ejs`, `!assembler/template/src/view/**/*.*`],
+			ejs: ['assembler/template/**/*.*', `!assembler/template/src/index.html`],
+		},
 		validation: `${targetPath}/app/index.html`,
 	}
 }
