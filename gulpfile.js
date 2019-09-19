@@ -25,13 +25,21 @@ gulp.task(task.build.fonts, assets.fonts);
 gulp.task(task.watch, serv.watch);
 gulp.task(task.connect, serv.connect);
 gulp.task(task.clean, serv.clean);
-gulp.task(task.check, serv.check);
+gulp.task(task.workWithTarget, serv.workWithTarget);
+gulp.task(task.setJsType, serv.setJsType);
+gulp.task(task.setJsPath, serv.setJsPath);
 gulp.task(task.info, info);
+
+gulp.task(task.prestart,
+	gulp.series(
+		task.workWithTarget,
+		task.setJsType,
+		task.setJsPath,
+		));
 
 gulp.task(
 	task.development,
 	gulp.parallel(
-		task.watch,
 		task.dev.html,
 		task.validator,
 		task.dev.css,
@@ -40,7 +48,8 @@ gulp.task(
 		task.build.libs,
 		task.build.fav,
 		task.build.fonts,
-		task.connect
+		task.connect,
+		task.watch
 		));
 
 gulp.task(
@@ -55,6 +64,6 @@ gulp.task(
 		task.build.fonts
 		));
 
-gulp.task(task.startProd, gulp.series(task.check, task.clean, task.production));
-gulp.task(task.startDev, gulp.series(task.check, task.clean, task.development));
+gulp.task(task.startProd, gulp.series(task.prestart, task.clean, task.production));
+gulp.task(task.startDev, gulp.series(task.prestart, task.clean, task.development));
 gulp.task(task.default, gulp.parallel(task.startDev));

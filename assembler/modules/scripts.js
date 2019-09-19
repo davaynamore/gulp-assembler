@@ -2,8 +2,10 @@ const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
 babelify = require("babelify"),
 browserify = require('browserify'),
+tsify = require('tsify'),
 source = require('vinyl-source-stream'),
 buffer = require('vinyl-buffer'),
+fs = require('fs'),
 { path } = require('./vars').vars;
 
 const dev = () => {
@@ -17,6 +19,7 @@ const dev = () => {
 		global: true
 	}
 	)
+	.plugin(tsify)
 	.bundle()
 	.pipe(source('bundle.js'))
 	.pipe(gulp.dest(path.app.js));
@@ -33,6 +36,7 @@ const build = () => {
 		global: true
 	}
 	)
+	.plugin(tsify)
 	.bundle()
 	.pipe(source('bundle.js'))
 	.pipe(buffer())

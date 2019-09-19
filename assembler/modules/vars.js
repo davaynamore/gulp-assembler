@@ -37,16 +37,19 @@ const vars = {
 		production: 'production',
 		default: 'default',
 		validator: 'valid',
-		check: 'check',
 		startDev: 'startDev',
 		startProd: 'prod',
-		info: 'info'
+		info: 'info',
+		prestart: 'prestart',
+		workWithTarget: 'workWithTarget',
+		setJsType: 'setJsType',
+		setJsPath: 'setJsPath'
 	},
 	path: {
 		src: {
 			html: `${targetPath}/src/*.+(ejs|html)`,
-			js: `${targetPath}/src/js/app.js`,
-			scss: `${targetPath}/src/scss/**/[^_]*.+(scss|sass)`,
+			js: `${targetPath}/src/js/`,
+			scss: `${targetPath}/src/scss/**/[^_]*.+(css|scss|sass)`,
 			img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
 			fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
 			libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`],
@@ -64,7 +67,7 @@ const vars = {
 		watch: {
 			html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/view/**/*.*`],
 			js: `${targetPath}/src/js/**/*.+(js|ts)`,
-			scss: `${targetPath}/src/scss/**/*.+(scss|sass)`,
+			scss: `${targetPath}/src/scss/**/*.+(css|scss|sass)`,
 			img: `${targetPath}/src/img/**/*.*`,
 			fonts: `${targetPath}/src/fonts/**/*.*`,
 			libs: `${targetPath}/src/libs/**/*.*`,
@@ -72,8 +75,10 @@ const vars = {
 		},
 		serverRoot: `${targetPath}/app`,
 		template: {
-			simple: ['assembler/template/**/*.*', `!assembler/template/src/index.ejs`, `!assembler/template/src/view/**/*.*`],
+			html: ['assembler/template/**/*.*', `!assembler/template/src/index.ejs`, `!assembler/template/src/view/**/*.*`],
 			ejs: ['assembler/template/**/*.*', `!assembler/template/src/index.html`],
+			js: `${targetPath}/src/js/app.js`,
+			ts: `${targetPath}/src/js/app.ts`,
 		},
 		validation: `${targetPath}/app/index.html`,
 	}

@@ -48,6 +48,7 @@ const info = () => {
 		`\n\n   ${toWhite('gulp build ---{projectDirectoryName}')}`,
 		`\n\n\n ${toTitle('Optional Parameters:')}`,
 		`\n\n   ${toWhite('--ejs')}`,`${toYellow('- run it once when create a new project to enable ejs preprocessor!')}`,
+		`\n\n   ${toWhite('--ts')}`,`${toYellow('- run it once when create a new project to enable typescript!')}`,
 		`\n\n   ${toWhite('--notvalid')}`,`${toYellow('- to unable HTML validation')}\n`,
 		`${line}`
 		);

@@ -36,8 +36,8 @@ const clean = () => {
 	}));
 }
 
-const check = () => {
-	const srcPath = argv.ejs ? path.template.ejs : path.template.simple;
+const workWithTarget = () => {
+	const srcPath = argv.ejs ? path.template.ejs : path.template.html;
 	return new Promise(function(resolve) {
 		if(!fs.existsSync(targetPath)) {
 			gulp.src(srcPath, { allowEmpty: true })
@@ -47,11 +47,31 @@ const check = () => {
 	});
 }
 
+const setJsType = (done) => {
+	if(!fs.existsSync(targetPath)){
+		if(argv.ts) {
+			fs.rename(path.template.js, path.template.ts, function (err) {
+				if (err) throw err;
+			});
+		}
+	}
+	done();
+}
+
+const setJsPath = (done) => {
+	fs.readdir(path.src.js, function(err, items) {
+		path.src.js += items[0];
+	});
+	done();
+}
+
 const serv = {
 	watch,
 	connect,
 	clean,
-	check
+	workWithTarget,
+	setJsType,
+	setJsPath
 }
 
 module.exports = serv;
