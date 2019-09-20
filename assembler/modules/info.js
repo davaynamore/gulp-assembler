@@ -50,6 +50,7 @@ const info = () => {
 		`\n\n   ${toWhite('--ejs')}`,`${toYellow('- run it once when create a new project to enable ejs preprocessor!')}`,
 		`\n\n   ${toWhite('--ts')}`,`${toYellow('- run it once when create a new project to enable typescript!')}`,
 		`\n\n   ${toWhite('--notvalid')}`,`${toYellow('- to unable HTML validation')}\n`,
+		`\n\n   ${toWhite('--build')}`,`${toYellow('- run build for production')}\n`,
 		`${line}`
 		);
 		return process.exit();

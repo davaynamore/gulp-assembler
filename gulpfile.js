@@ -2,6 +2,7 @@
 
 const { task } = require('./assembler/modules/vars').vars,
 gulp = require('gulp'),
+argv = require('yargs').argv,
 html = require('./assembler/modules/html'),
 scss = require('./assembler/modules/scss'),
 js = require('./assembler/modules/scripts'),
@@ -10,18 +11,14 @@ assets = require('./assembler/modules/assets'),
 serv = require('./assembler/modules/serv'),
 info = require('./assembler/modules/info');
 
-gulp.task(task.dev.css, scss.dev);
-gulp.task(task.build.css, scss.build);
-gulp.task(task.dev.html, html.dev);
-gulp.task(task.build.html, html.build);
+gulp.task(task.css, scss);
+gulp.task(task.html, html.dev);
 gulp.task(task.validator, html.validator);
-gulp.task(task.dev.js, js.dev);
-gulp.task(task.build.js, js.build);
-gulp.task(task.dev.img, img.dev);
-gulp.task(task.build.img, img.build);
-gulp.task(task.build.libs, assets.libs);
-gulp.task(task.build.fav, assets.fav);
-gulp.task(task.build.fonts, assets.fonts);
+gulp.task(task.js, js);
+gulp.task(task.img, img);
+gulp.task(task.libs, assets.libs);
+gulp.task(task.fav, assets.fav);
+gulp.task(task.fonts, assets.fonts);
 gulp.task(task.watch, serv.watch);
 gulp.task(task.connect, serv.connect);
 gulp.task(task.clean, serv.clean);
@@ -38,32 +35,19 @@ gulp.task(task.prestart,
 		));
 
 gulp.task(
-	task.development,
+	task.start,
 	gulp.parallel(
-		task.dev.html,
-		task.validator,
-		task.dev.css,
-		task.dev.js,
-		task.dev.img,
-		task.build.libs,
-		task.build.fav,
-		task.build.fonts,
+		task.html,
+		task.css,
+		task.js,
+		task.img,
+		task.libs,
+		task.fav,
+		task.fonts,
 		task.connect,
+		task.validator,
 		task.watch
 		));
 
-gulp.task(
-	task.production,
-	gulp.parallel(
-		task.build.html,
-		task.build.css,
-		task.build.js,
-		task.build.img,
-		task.build.libs,
-		task.build.fav,
-		task.build.fonts
-		));
 
-gulp.task(task.startProd, gulp.series(task.prestart, task.clean, task.production));
-gulp.task(task.startDev, gulp.series(task.prestart, task.clean, task.development));
-gulp.task(task.default, gulp.parallel(task.startDev));
+gulp.task(task.default, gulp.series(task.prestart, task.clean, task.start));

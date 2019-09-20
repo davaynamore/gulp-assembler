@@ -1,35 +1,21 @@
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
-{ path } = require('./vars').vars;
+argv = require('yargs').argv,
+{ path, task } = require('./vars').vars;
 
-const dev = () => {
+const scss = () => {
 	return setTimeout(() => {
-		return gulp.src(path.src.scss, { allowEmpty: true })
-		.pipe($.sourcemaps.init())
+		return gulp.src(path.src.scss, { since: gulp.lastRun(task.css), allowEmpty: true })
+		.pipe($.if(!argv.build, $.sourcemaps.init()))
 		.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 		.pipe($.autoprefixer({
 			cascade: false
 		}))
 		.pipe($.csscomb())
-		.pipe($.sourcemaps.write())
+		.pipe($.if(argv.build, $.cssnano()))
+		.pipe($.if(!argv.build, $.sourcemaps.write()))
 		.pipe(gulp.dest(path.app.css));
 	}, 500);
-}
-
-const build = () => {
-	return gulp.src(path.src.scss, { allowEmpty: true })
-	.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
-	.pipe($.autoprefixer({
-		cascade: false
-	}))
-	.pipe($.csscomb())
-	.pipe($.cssnano())
-	.pipe(gulp.dest(path.app.css));
-}
-
-const scss = {
-	dev,
-	build
 }
 
 module.exports = scss;

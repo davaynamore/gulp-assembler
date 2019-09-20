@@ -15,30 +15,20 @@ targetPath += !param ? info() : param.split('').slice(1).join("");
 
 const vars = {
 	task: {
-		dev: {
-			html: 'html:dev',
-			css: 'css:dev',
-			js: 'js:dev',
-			img: 'img:dev'
-		},
-		build: {
-			libs: 'libs',
-			fonts: 'fonts',
-			html: 'html:build',
-			css: 'css:build',
-			js: 'js:build',
-			img: 'img:build',
-			fav: 'fav:build'
-		},
+		html: 'html',
+		css: 'css',
+		js: 'js',
+		img: 'img',
+		libs: 'libs',
+		fonts: 'fonts',
+		fav: 'fav',
 		watch: 'watch',
 		connect: 'connect',
 		clean: 'clean',
-		development: 'dev',
-		production: 'production',
+		start: 'start',
+		dev: 'dev',
 		default: 'default',
 		validator: 'valid',
-		startDev: 'startDev',
-		startProd: 'prod',
 		info: 'info',
 		prestart: 'prestart',
 		workWithTarget: 'workWithTarget',
@@ -73,7 +63,6 @@ const vars = {
 			libs: `${targetPath}/src/libs/**/*.*`,
 			fav: `${targetPath}/src/fav/**/*.*`
 		},
-		serverRoot: `${targetPath}/app`,
 		template: {
 			html: ['assembler/template/**/*.*', `!assembler/template/src/index.ejs`, `!assembler/template/src/view/**/*.*`],
 			ejs: ['assembler/template/**/*.*', `!assembler/template/src/index.html`],
@@ -81,6 +70,7 @@ const vars = {
 			ts: `${targetPath}/src/js/app.ts`,
 		},
 		validation: `${targetPath}/app/index.html`,
+		serverRoot: `${targetPath}/app`
 	}
 }
 

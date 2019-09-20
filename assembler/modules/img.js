@@ -1,21 +1,12 @@
 const gulp = require('gulp'),
 $ = require('gulp-load-plugins')(),
-{ path } = require('./vars').vars;
+argv = require('yargs').argv,
+{ path, task } = require('./vars').vars;
 
-const dev = () => {
-	return gulp.src(path.src.img, { allowEmpty: true })
+const img = () => {
+	return gulp.src(path.src.img, { since: gulp.lastRun(task.img), allowEmpty: true })
+	.pipe($.if(argv.build, $.imagemin()))
 	.pipe(gulp.dest(path.app.img));
-}
-
-const build = () => {
-	return gulp.src(path.src.img, { allowEmpty: true })
-	.pipe($.imagemin())
-	.pipe(gulp.dest(path.app.img));
-}
-
-const img = {
-	dev,
-	build
 }
 
 module.exports = img;
