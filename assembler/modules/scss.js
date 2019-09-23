@@ -3,9 +3,9 @@ $ = require('gulp-load-plugins')(),
 argv = require('yargs').argv,
 { path, task } = require('./vars').vars;
 
-const scss = () => {
-	return setTimeout(() => {
-		return gulp.src(path.src.scss, { since: gulp.lastRun(task.css), allowEmpty: true })
+const scss = (done) => {
+	return new Promise(function(resolve) {
+		gulp.src(path.src.scss, { since: gulp.lastRun(task.css), allowEmpty: true })
 		.pipe($.if(!argv.build, $.sourcemaps.init()))
 		.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 		.pipe($.autoprefixer({
@@ -15,7 +15,8 @@ const scss = () => {
 		.pipe($.if(argv.build, $.cssnano()))
 		.pipe($.if(!argv.build, $.sourcemaps.write()))
 		.pipe(gulp.dest(path.app.css));
-	}, 500);
+		setTimeout(resolve, 500);
+	});
 }
 
 module.exports = scss;

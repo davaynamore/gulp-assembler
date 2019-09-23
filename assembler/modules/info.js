@@ -35,25 +35,34 @@ const toTitle = (string) => {
 	return `\x1b[31m\x1b[4m\x1b[1m ${string} \x1b[0m`
 }
 
+const line = `\n\x1b[36m#################################################################################\x1b[0m\n`;
 
+const ifIsNotExist = () => {
+	console.log(
+		`${line}`,
+		`\n ${toTitle('Your project is not exist!')}`,
+		`\n\n\n ${toTitle('Create your project at first')}`
+		);
+}
 
-const info = () => {
-		const line = `\n\x1b[36m#################################################################################\x1b[0m\n`;
-		console.log(
+const help = () => {
+	console.log(
 		`${line}`,
 		`\n${toYellow('In the root of Assemble, run the following commands..')}`,
-		`\n\n ${toTitle('Development Build:')}`,
 		`\n\n   ${toWhite('gulp ---{projectDirectoryName}')}`,
-		`\n\n\n ${toTitle('Production Build:')}`,
-		`\n\n   ${toWhite('gulp build ---{projectDirectoryName}')}`,
 		`\n\n\n ${toTitle('Optional Parameters:')}`,
-		`\n\n   ${toWhite('--ejs')}`,`${toYellow('- run it once when create a new project to enable ejs preprocessor!')}`,
+		`\n\n   ${toWhite('--ejs')}`,`${toYellow('- run it once when create a new project to enable ejs templating!')}`,
 		`\n\n   ${toWhite('--ts')}`,`${toYellow('- run it once when create a new project to enable typescript!')}`,
 		`\n\n   ${toWhite('--notvalid')}`,`${toYellow('- to unable HTML validation')}\n`,
 		`\n\n   ${toWhite('--build')}`,`${toYellow('- run build for production')}\n`,
 		`${line}`
 		);
-		return process.exit();
+	return process.exit();
+}
+
+const info = {
+	help,
+	ifIsNotExist
 }
 
 module.exports = info;

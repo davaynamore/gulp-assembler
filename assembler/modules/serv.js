@@ -8,7 +8,7 @@ browserSync = require('browser-sync').create(),
 
 const reloadDelay = () => setTimeout(browserSync.reload, 500);
 
-const watch = (done) => {
+const watch = () => {
 	$.watch(path.watch.scss, gulp.series(task.css)).on('change', reloadDelay),
 	$.watch(path.watch.html, gulp.series(task.html, task.validator)).on('change', reloadDelay),
 	$.watch(path.watch.js, gulp.series(task.js)).on('change', reloadDelay),
@@ -36,6 +36,15 @@ const clean = () => {
 	}));
 }
 
+const setJsType = (done) => {
+	if(argv.ts) {
+		fs.rename(path.template.js, path.template.ts, function (err) {
+			if (err) throw err;
+		});
+	}
+	done();
+}
+
 const workWithTarget = () => {
 	const srcPath = argv.ejs ? path.template.ejs : path.template.html;
 	return new Promise(function(resolve) {
@@ -45,17 +54,6 @@ const workWithTarget = () => {
 		}
 		setTimeout(resolve, 2000);
 	});
-}
-
-const setJsType = (done) => {
-	if(!fs.existsSync(targetPath)){
-		if(argv.ts) {
-			fs.rename(path.template.js, path.template.ts, function (err) {
-				if (err) throw err;
-			});
-		}
-	}
-	done();
 }
 
 const setJsPath = (done) => {

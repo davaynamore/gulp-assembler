@@ -1,4 +1,5 @@
 const argv = require('yargs').argv,
+fs = require('fs'),
 info = require('./info');
 let param = null;
 
@@ -10,8 +11,12 @@ for(let prop in argv) {
 }
 
 let targetPath = 'projects/';
-targetPath += !param ? info() : param.split('').slice(1).join("");
+targetPath += !param ? info.help() : param.split('').slice(1).join("");
 
+if(!fs.existsSync(targetPath) && argv.build) {
+	info.ifIsNotExist();
+	info.help();
+}
 
 const vars = {
 	task: {

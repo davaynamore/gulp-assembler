@@ -25,13 +25,13 @@ gulp.task(task.clean, serv.clean);
 gulp.task(task.workWithTarget, serv.workWithTarget);
 gulp.task(task.setJsType, serv.setJsType);
 gulp.task(task.setJsPath, serv.setJsPath);
-gulp.task(task.info, info);
+gulp.task(task.info, info.help);
 
 gulp.task(task.prestart,
 	gulp.series(
 		task.workWithTarget,
 		task.setJsType,
-		task.setJsPath,
+		task.setJsPath
 		));
 
 gulp.task(
@@ -39,15 +39,16 @@ gulp.task(
 	gulp.parallel(
 		task.html,
 		task.css,
-		task.js,
 		task.img,
 		task.libs,
 		task.fav,
 		task.fonts,
+		task.js,
 		task.connect,
 		task.validator,
 		task.watch
 		));
+
 
 
 gulp.task(task.default, gulp.series(task.prestart, task.clean, task.start));
