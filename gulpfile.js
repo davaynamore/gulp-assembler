@@ -37,7 +37,10 @@ gulp.task(task.prestart,
 gulp.task(
 	task.start,
 	gulp.parallel(
-		task.html,
+		gulp.series(
+			task.html,
+			task.validator,
+		),
 		task.css,
 		task.img,
 		task.libs,
@@ -45,7 +48,6 @@ gulp.task(
 		task.fonts,
 		task.js,
 		task.connect,
-		task.validator,
 		task.watch
 		));
 

@@ -6,8 +6,6 @@ browserSync = require('browser-sync').create(),
 { targetPath } = require('./vars'),
 { path, task, ejs } = require('./vars').vars;
 
-const reloadDelay = () => setTimeout(browserSync.reload, 500);
-
 const watch = () => {
 	$.watch(path.watch.scss, gulp.series(task.css)),
 	$.watch(path.watch.html, gulp.series(task.html, task.validator)),
@@ -27,7 +25,7 @@ const connect = () => {
 		tunnel: false
 	});
 
-	browserSync.watch(path.serverRoot).on('change', reloadDelay);
+	browserSync.watch(path.serverRoot).on('change', () => setTimeout(browserSync.reload, 500));
 }
 
 const clean = () => {
