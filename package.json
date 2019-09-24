@@ -1,7 +1,7 @@
 {
   "name": "gulp-assebler",
   "version": "1.0.0",
-  "description": "Front-End assembler for Beetroot Academy's students",
+  "description": "Front-End assembler",
   "main": "gulpfile.js",
   "scripts": {
     "help": "gulp info"
