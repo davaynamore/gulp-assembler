@@ -24,11 +24,9 @@ const vars = {
 		css: 'css',
 		js: 'js',
 		img: 'img',
-		libs: 'libs',
-		fonts: 'fonts',
-		fav: 'fav',
+		assets: 'assets',
 		watch: 'watch',
-		connect: 'connect',
+		server: 'server',
 		clean: 'clean',
 		start: 'start',
 		dev: 'dev',
@@ -46,27 +44,24 @@ const vars = {
 			js: `${targetPath}/src/js/`,
 			scss: `${targetPath}/src/scss/**/[^_]*.+(css|scss|sass)`,
 			img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
-			fonts: [`${targetPath}/src/fonts/**/*.*`,`!${targetPath}/src/fonts/**/*.ini`],
-			libs: [`${targetPath}/src/libs/**/*.*`,`!${targetPath}/src/libs/**/*.ini`],
-			fav: [`${targetPath}/src/fav/**/*.*`,`!${targetPath}/src/fav/**/*.ini`]
+			assets: [`${targetPath}/src/assets/**/*.*`,`!${targetPath}/src/assets/**/*.ini`]
 		},
 		app: {
 			html: `${targetPath}/app/`,
 			js: `${targetPath}/app/js/`,
 			css: `${targetPath}/app/css/`,
 			img: `${targetPath}/app/img/`,
-			fonts: `${targetPath}/app/fonts/`,
-			libs: `${targetPath}/app/libs/`,
-			fav: `${targetPath}/app/fav/`
+			fonts: `${targetPath}/app/assets/fonts/`,
+			libs: `${targetPath}/app/assets/libs/`,
+			fav: `${targetPath}/app/assets/fav/`,
+			assets: `${targetPath}/app/assets/`
 		},
 		watch: {
 			html: [`${targetPath}/src/*.html`, `${targetPath}/src/*.ejs`, `${targetPath}/src/view/**/*.*`],
 			js: `${targetPath}/src/js/**/*.+(js|ts)`,
 			scss: `${targetPath}/src/scss/**/*.+(css|scss|sass)`,
 			img: `${targetPath}/src/img/**/*.*`,
-			fonts: `${targetPath}/src/fonts/**/*.*`,
-			libs: `${targetPath}/src/libs/**/*.*`,
-			fav: `${targetPath}/src/fav/**/*.*`
+			assets: `${targetPath}/src/assets/**/*.*`
 		},
 		template: {
 			html: ['assembler/template/**/*.*', `!assembler/template/src/index.ejs`, `!assembler/template/src/view/**/*.*`],

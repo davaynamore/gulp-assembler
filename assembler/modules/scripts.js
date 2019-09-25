@@ -8,7 +8,7 @@ source = require('vinyl-source-stream'),
 buffer = require('vinyl-buffer'),
 { path } = require('./vars').vars;
 
-const js = (done) => {
+const js = () => {
     return browserify(path.src.js, {debug: true})
     .transform(babelify, {
         presets: ["@babel/preset-env"],
