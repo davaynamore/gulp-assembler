@@ -3,7 +3,7 @@ $ = require('gulp-load-plugins')(),
 argv = require('yargs').argv,
 { path, task } = require('./vars').vars;
 
-const scss = (done) => {
+const scss = () => {
 	return new Promise(function(resolve) {
 		gulp.src(path.src.scss, { since: gulp.lastRun(task.css), allowEmpty: true })
 		.pipe($.if(!argv.build, $.sourcemaps.init()))
