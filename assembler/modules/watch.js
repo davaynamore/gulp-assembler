@@ -4,7 +4,7 @@ $ = require('gulp-load-plugins')(),
 
 const watch = () => {
 	$.watch(path.watch.scss, gulp.series(task.css)),
-	$.watch(path.watch.html, gulp.series(task.html, task.validator)),
+	$.watch(path.watch.html, gulp.series(task.html)),
 	$.watch(path.watch.js, gulp.series(task.js)),
 	$.watch(path.watch.img, gulp.series(task.img)),
 	$.watch(path.watch.assets, gulp.series(task.assets))

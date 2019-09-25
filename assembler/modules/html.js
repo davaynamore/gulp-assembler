@@ -3,7 +3,7 @@ $ = require('gulp-load-plugins')(),
 argv = require('yargs').argv,
 { path, task } = require('./vars').vars;
 
-const dev = () => {
+const html = () => {
 	return gulp.src(path.src.html, { allowEmpty: true })
 	.pipe($.ejsLocals().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
 	.pipe($.ejs().on('error', $.notify.onError("EJS-Error: <%= error.message %>")))
@@ -22,9 +22,4 @@ const validator = () => {
 	.pipe(gulp.dest(path.app.html));
 }
 
-const html = {
-	dev,
-	validator
-}
-
-module.exports = html;
+module.exports = gulp.series(html, validator);

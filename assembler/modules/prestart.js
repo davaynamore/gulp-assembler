@@ -5,14 +5,6 @@ fs = require('fs'),
 { targetPath } = require('./vars'),
 { path } = require('./vars').vars;
 
-const clean = () => {
-	return gulp.src(path.serverRoot, { allowEmpty: true })
-	.pipe($.clean({
-		force: true,
-		read: false
-	}));
-}
-
 const setJsType = (cb) => {
 	if(argv.ts) {
 		fs.rename(path.template.js, path.template.ts, function (err) {
@@ -40,11 +32,4 @@ const setJsPath = (cb) => {
 	cb();
 }
 
-const prestart = {
-	clean,
-	workWithTarget,
-	setJsType,
-	setJsPath
-}
-
-module.exports = prestart;
+module.exports = gulp.series(workWithTarget, setJsType, setJsPath);

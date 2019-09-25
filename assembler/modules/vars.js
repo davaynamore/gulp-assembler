@@ -31,15 +31,12 @@ const vars = {
 		start: 'start',
 		dev: 'dev',
 		default: 'default',
-		validator: 'valid',
 		info: 'info',
-		prestart: 'prestart',
-		workWithTarget: 'workWithTarget',
-		setJsType: 'setJsType',
-		setJsPath: 'setJsPath'
+		prestart: 'prestart'
 	},
 	path: {
 		src: {
+			base: `${targetPath}/src/`,
 			html: `${targetPath}/src/*.+(ejs|html)`,
 			js: `${targetPath}/src/js/`,
 			scss: `${targetPath}/src/scss/**/[^_]*.+(css|scss|sass)`,
@@ -69,6 +66,7 @@ const vars = {
 			js: `${targetPath}/src/js/app.js`,
 			ts: `${targetPath}/src/js/app.ts`,
 		},
+		manifest: `${targetPath}/src/rev-manifest.json)`,
 		validation: `${targetPath}/app/index.html`,
 		serverRoot: `${targetPath}/app`
 	}
