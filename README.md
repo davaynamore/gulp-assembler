@@ -9,21 +9,28 @@ npm install gulp-cli -g
 ```
 
 **To create new project:**
-* Clone this repo:
+* Clone assembler's repo:
 ```
-git clone https://github.com/davaynamore/gulp-assembler.git
+git clone https://github.com/davaynamore/gulp-assembler.git {beetroot}
 ```
 
-* Copy files from cloned directory _gulp-assembler_ to your projects' root directory
-* Move to your new project's directory:
+* Move to assembler's directory:
 ```
-cd your_projects'_root_directory
+cd assembler's_root_directory
 ```
 * Install dependencies:
 ```
 npm i
 ```
+* Add your projects directory as gitmodule:
+```
+git submodule add -f https://github.com/{username}/{username}.github.io.git projects
+```
 * To start development run:
 ```
 gulp ---project's_directory_name
+```
+or run
+```
+npm run help
 ```
