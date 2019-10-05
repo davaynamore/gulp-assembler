@@ -7,6 +7,10 @@ _fe-assembler for beetroot-students_
 ```
 npm install gulp-cli -g
 ```
+if MacOS
+```
+sudo npm install gulp-cli -g
+```
 
 **To create new project:**
 * Clone assembler's repo:
