@@ -5,7 +5,7 @@ argv = require('yargs').argv,
 
 const scss = () => {
 	return new Promise(function(resolve) {
-		gulp.src(path.src.scss, { since: gulp.lastRun(task.css), allowEmpty: true })
+		gulp.src(path.src.scss, { allowEmpty: true })
 		.pipe($.if(!argv.build, $.sourcemaps.init()))
 		.pipe($.sass().on('error', $.notify.onError("SASS-Error: <%= error.message %>")))
 		.pipe($.autoprefixer({
