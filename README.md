@@ -2,6 +2,11 @@
 _fe-assembler for beetroot-students_
 
 **Required:**
+* Clone assembler's repo:
+```
+git clone https://github.com/davaynamore/gulp-assembler.git {beetroot}
+```
+
 * Install [Node.js](https://nodejs.org/uk/)
 * Install `gulp-cli`:
 ```
@@ -13,11 +18,6 @@ sudo npm install gulp-cli -g
 ```
 
 **To create new project:**
-* Clone assembler's repo:
-```
-git clone https://github.com/davaynamore/gulp-assembler.git {beetroot}
-```
-
 * Move to assembler's directory:
 ```
 cd assembler's_root_directory
