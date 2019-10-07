@@ -4,7 +4,7 @@ _fe-assembler for beetroot-students_
 **Required:**
 * Clone assembler's repo:
 ```
-git clone https://github.com/davaynamore/gulp-assembler.git {beetroot}
+git clone https://github.com/davaynamore/gulp-assembler.git
 ```
 
 * Install [Node.js](https://nodejs.org/uk/)
