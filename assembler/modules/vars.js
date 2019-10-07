@@ -32,7 +32,8 @@ const vars = {
 		dev: 'dev',
 		default: 'default',
 		info: 'info',
-		prestart: 'prestart'
+		prestart: 'prestart',
+		sprites: 'sprites'
 	},
 	path: {
 		src: {
@@ -41,7 +42,11 @@ const vars = {
 			js: `${targetPath}/src/js/`,
 			scss: `${targetPath}/src/scss/**/[^_]*.+(css|scss|sass)`,
 			img: [`${targetPath}/src/img/**/*.*`, `!${targetPath}/src/img/**/*.ini`],
-			assets: [`${targetPath}/src/assets/**/*.*`,`!${targetPath}/src/assets/**/*.ini`]
+			assets: [`${targetPath}/src/assets/**/*.*`,`!${targetPath}/src/assets/**/*.ini`],
+			icons: {
+				png: `${targetPath}/src/icons/**/*.png`,
+				svg: `${targetPath}/src/icons/**/*.svg`
+			}
 		},
 		app: {
 			html: `${targetPath}/app/`,
@@ -58,6 +63,7 @@ const vars = {
 			js: `${targetPath}/src/js/**/*.+(js|ts)`,
 			scss: `${targetPath}/src/scss/**/*.+(css|scss|sass)`,
 			img: `${targetPath}/src/img/**/*.*`,
+			icons: `${targetPath}/src/icons/**/*.svg`,
 			assets: `${targetPath}/src/assets/**/*.*`
 		},
 		template: {

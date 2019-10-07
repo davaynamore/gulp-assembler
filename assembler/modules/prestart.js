@@ -26,7 +26,7 @@ const workWithTarget = () => {
 }
 
 const setJsPath = (cb) => {
-	fs.readdir(path.src.js, function(err, items) {
+	fs.readdir(path.src.js, (err, items) => {
 		path.src.js += items[0];
 	});
 	cb();
