@@ -30,6 +30,10 @@ npm i
 ```
 git submodule add -f https://github.com/{username}/{username}.github.io.git projects
 ```
+* Start this command:
+```
+git rm --cached -f projects
+```
 * To start development run:
 ```
 gulp ---project's_directory_name
