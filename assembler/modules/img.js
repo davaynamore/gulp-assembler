@@ -4,7 +4,7 @@ argv = require('yargs').argv,
 { path, task } = require('./vars').vars;
 
 const img = () => {
-	return gulp.src(path.src.img, { since: gulp.lastRun(task.img), allowEmpty: true })
+	return gulp.src(path.src.img, { allowEmpty: true })
 	.pipe($.if(argv.build, $.imagemin()))
 	.pipe(gulp.dest(path.app.img));
 }
