@@ -29,13 +29,13 @@ gulp.task(task.sprites, sprites);
 
 gulp.task(
 	task.start,
-	gulp.series(
+	gulp.parallel(
 		task.img,
-		task.html,
+		task.sprites,
 		task.css,
 		task.js,
-		task.sprites,
 		task.assets,
+		task.html,
 		task.server,
 		task.watch
 		)
