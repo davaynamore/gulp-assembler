@@ -69,6 +69,9 @@ const vars = {
 		template: {
 			html: ['assembler/template/**/*.*', `!assembler/template/src/index.ejs`, `!assembler/template/src/view/**/*.*`],
 			ejs: ['assembler/template/**/*.*', `!assembler/template/src/index.html`],
+			js: `assembler/template/src/js/*.*`
+		},
+		jstype: {
 			js: `${targetPath}/src/js/app.js`,
 			ts: `${targetPath}/src/js/app.ts`,
 		},

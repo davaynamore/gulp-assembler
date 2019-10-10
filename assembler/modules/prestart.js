@@ -5,14 +5,7 @@ fs = require('fs'),
 { targetPath } = require('./vars'),
 { path } = require('./vars').vars;
 
-const setJsType = (cb) => {
-	if(argv.ts) {
-		fs.rename(path.template.js, path.template.ts, function (err) {
-			if (err) throw err;
-		});
-	}
-	cb();
-}
+
 
 const workWithTarget = () => {
 	const srcPath = argv.ejs ? path.template.ejs : path.template.html;
@@ -25,11 +18,33 @@ const workWithTarget = () => {
 	});
 }
 
-const setJsPath = (cb) => {
-	fs.readdir(path.src.js, (err, items) => {
-		path.src.js += items[0];
+const copyJsFiles = () => {
+	return new Promise(function(resolve) {
+		if(!fs.existsSync(path.src.js)) {
+			gulp.src(path.template.js, { allowEmpty: true })
+			.pipe(gulp.dest(path.src.js));
+		}
+		setTimeout(resolve, 2000);
 	});
+}
+
+const setJsType = (cb) => {
+	if(argv.ts) {
+		fs.rename(path.jstype.js, path.jstype.ts, function (err) {
+			if (err) throw err;
+		});
+	}
 	cb();
 }
 
-module.exports = gulp.series(workWithTarget, setJsType, setJsPath);
+const setJsPath = (cb) => {
+
+	fs.readdir(path.src.js, (err, items) => {
+		if (err) throw err;
+		path.src.js += items[0];
+	});
+
+	cb();
+}
+
+module.exports = gulp.series(workWithTarget, copyJsFiles, setJsType, setJsPath);
