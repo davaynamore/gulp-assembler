@@ -10,7 +10,7 @@ for(let prop in argv) {
 	}
 }
 
-let targetPath = 'projects/';
+let targetPath = `${argv.path}/` || 'projects/';
 targetPath += !param ? info.help() : param.split('').slice(1).join("");
 
 if(!fs.existsSync(targetPath) && argv.build) {
