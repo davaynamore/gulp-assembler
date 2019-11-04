@@ -12,8 +12,7 @@ server = require('./assembler/modules/server'),
 watch = require('./assembler/modules/watch'),
 prestart = require('./assembler/modules/prestart'),
 clean = require('./assembler/modules/clean'),
-info = require('./assembler/modules/info'),
-sprites = require('./assembler/modules/sprites');
+info = require('./assembler/modules/info');
 
 gulp.task(task.css, scss);
 gulp.task(task.html, html);
@@ -25,13 +24,12 @@ gulp.task(task.server, server);
 gulp.task(task.clean, clean);
 gulp.task(task.prestart, prestart);
 gulp.task(task.info, info.help);
-gulp.task(task.sprites, sprites);
+
 
 gulp.task(
 	task.start,
 	gulp.parallel(
 		task.img,
-		task.sprites,
 		task.css,
 		task.js,
 		task.assets,
