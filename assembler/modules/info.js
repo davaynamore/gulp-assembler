@@ -53,8 +53,8 @@ const help = () => {
 		`\n\n\n ${toTitle('Optional Parameters:')}`,
 		`\n\n   ${toWhite('--ejs')}`,`${toYellow('- run it once when create a new project to enable ejs templating!')}`,
 		`\n\n   ${toWhite('--ts')}`,`${toYellow('- run it once when create a new project to enable typescript!')}`,
-		`\n\n   ${toWhite('--notvalid')}`,`${toYellow('- to unable HTML validation')}\n`,
-		`\n\n   ${toWhite('--build')}`,`${toYellow('- run build for production')}\n`,
+		`\n\n   ${toWhite('--notvalid')}`,`${toYellow('- to unable HTML validation')}`,
+		`\n\n   ${toWhite('--build')}`,`${toYellow('- run build for production')}`,
 		`\n\n   ${toWhite('--path=custom_directory')}`,`${toYellow('- to set other directory instead of "projects"')}\n`,
 		`${line}`
 		);
