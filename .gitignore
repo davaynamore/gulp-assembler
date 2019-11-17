@@ -1,8 +1,7 @@
-projects
-bhromaon
-grisha
-node_modules
-package-lock.json
-*.psd
-*.zip
-.gitmodules
+*
+!assembler
+!.csscomb
+!.gitignore
+!gulpfile.js
+!package.json
+!README.md
