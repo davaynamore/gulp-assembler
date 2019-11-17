@@ -10,7 +10,7 @@ const connect = () => {
 			open: true
 		},
 		tunnel: false,
-		port: port
+		port
 	});
 
 	browserSync.watch(path.serverRoot).on('change', () => setTimeout(browserSync.reload, 500));
