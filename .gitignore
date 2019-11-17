@@ -1,5 +1,8 @@
 projects
+bhromaon
+grisha
 node_modules
 package-lock.json
 *.psd
 *.zip
+.gitmodules
