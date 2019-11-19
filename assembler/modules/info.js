@@ -51,6 +51,7 @@ const help = () => {
 		`\n${toYellow('In the root of Assemble, run the following commands..')}`,
 		`\n\n   ${toWhite('gulp ---{projectDirectoryName}')}`,
 		`\n\n\n ${toTitle('Optional Parameters:')}`,
+		`\n\n   ${toWhite('--port')}`,`${toYellow('- set custom port, default port: 3000')}`,
 		`\n\n   ${toWhite('--ejs')}`,`${toYellow('- run it once when create a new project to enable ejs templating!')}`,
 		`\n\n   ${toWhite('--ts')}`,`${toYellow('- run it once when create a new project to enable typescript!')}`,
 		`\n\n   ${toWhite('--notvalid')}`,`${toYellow('- to unable HTML validation')}`,

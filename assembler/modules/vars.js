@@ -79,7 +79,8 @@ const vars = {
 		manifest: `${targetPath}/src/rev-manifest.json)`,
 		validation: `${targetPath}/app/index.html`,
 		serverRoot: `${targetPath}/app`
-	}
+	},
+	port: argv.port ? argv.port : 3000
 }
 
 

@@ -1,6 +1,7 @@
 const gulp = require('gulp'),
 browserSync = require('browser-sync').create(),
-{ path } = require('./vars').vars;
+argv = require('yargs').argv,
+{ path, port } = require('./vars').vars;
 
 const connect = () => {
 	browserSync.init({
@@ -8,7 +9,8 @@ const connect = () => {
 			baseDir: path.serverRoot,
 			open: true
 		},
-		tunnel: false
+		tunnel: false,
+		port
 	});
 
 	browserSync.watch(path.serverRoot).on('change', () => setTimeout(browserSync.reload, 500));

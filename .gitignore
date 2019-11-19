@@ -1,5 +1,7 @@
-projects
-node_modules
-package-lock.json
-*.psd
-*.zip
+*
+!assembler
+!.csscomb
+!.gitignore
+!gulpfile.js
+!package.json
+!README.md
