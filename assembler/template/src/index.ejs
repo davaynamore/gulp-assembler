@@ -1,7 +1,8 @@
+<%-partial('./view/partials/common/vars') %>
+
 <% layout('./view/layout/page') -%>
-<% block('title', 'Page title'); -%>
+<% block('title', blocks.hometitle); -%>
 
 <%-partial('./view/partials/sections/nav') %>
 
 <h1><%= blocks.title %></h1>
-<p>Welcome to <%= blocks.title %></p>
