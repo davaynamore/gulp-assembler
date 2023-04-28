@@ -6,7 +6,7 @@
   "scripts": {
     "help": "gulp info"
   },
-  "author": "Sergey Chuprina",
+  "author": "Serhii Chupryna",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.0",
